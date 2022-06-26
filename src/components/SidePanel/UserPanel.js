@@ -2,13 +2,17 @@ import React, { Component } from 'react'
 import { Dropdown, Grid, Header, Icon } from 'semantic-ui-react'
 import {auth} from '../../firebase'
 export class UserPanel extends Component {
+    state = {
+        user:this.props.currentUser
+    }
+  
     hangleSignout = () =>{
         auth.signOut().then(()=> console.log("signout"))
     }
     dropdownOptions = () => [
         {
             key:"user",
-            text:<span>Signed in as <b>USER</b></span>,
+            text:<span>Signed in as <b>{ this.state.user.email.slice(0,5)+"..." || "user"}</b></span>,
             disabled:true
         },
         {
@@ -20,8 +24,9 @@ export class UserPanel extends Component {
             text:<span onClick={this.hangleSignout}>Sign out </span>
         }
     ]
-    
+
   render() {
+    console.log("this.props.currentUser",this.props.currentUser)
     return (
       <Grid style={{background:"#4c3c4c",}}>
           <Grid.Column>

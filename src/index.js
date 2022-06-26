@@ -2,26 +2,24 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
 import { createStore } from "redux";
-import { Provider, connect } from "react-redux";
 import "semantic-ui-css/semantic.min.css";
+import { Provider, connect } from "react-redux";
+import { BrowserRouter as Router, Switch, Route, withRouter } from "react-router-dom";
+import Spinner from "./Spinner";
+import { auth } from './firebase'
+import rootReducer from "./reducers";
 import Login from "./components/Auth/Login";
+import { setUser, clearUser } from "./actions";
 import Register from "./components/Auth/Register";
 import registerServiceWorker from "./registerServiceWorker";
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { auth } from './firebase'
-import rootReducer from "./reducers";
-import { setUser, clearUser } from "./actions";
-import { BrowserRouter as Router, Switch, Route, withRouter } from "react-router-dom";
-import Spinner from "./Spinner";
 
 const store = createStore(rootReducer, composeWithDevTools())
 
 class Root extends React.Component {
   componentDidMount() {
-    console.log(this.props)
     auth.onAuthStateChanged(user => {
-      if (user || true) {
-        console.log({ user })
+      if (user ) {
         this.props.setUser(user);
         this.props.history.push("/");
       }

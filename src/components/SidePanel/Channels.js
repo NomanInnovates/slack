@@ -2,6 +2,8 @@
 import React, { Component } from 'react'
 import { database } from '../../firebase'
 import { Icon, Menu, Modal, Form, Input, Button } from 'semantic-ui-react'
+import { setCurrrentChannel } from '../../actions'
+import { connect } from 'react-redux'
 
 export class Channels extends Component {
   state = {
@@ -16,7 +18,6 @@ export class Channels extends Component {
     this.addListeners()
   }
   addListeners = () => {
-    console.log("addListeners runs")
     let loadedChannels = [];
     this.state.channelsRef.on('child_added', snap => {
       loadedChannels.push(snap.val())
@@ -27,7 +28,7 @@ export class Channels extends Component {
 
     channels.length > 0 && channels.map((channel) => (<Menu.Item
       key={channel.id}
-      onClick={() => console.log(channel)}
+      onClick={() => this.changeChannel(channel)}
       name={channel.name}
       style={{
         opacity: 0.7
@@ -51,6 +52,9 @@ export class Channels extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+  }
+  changeChannel = channel =>{
+    this.props.setCurrrentChannel(channel)
   }
   isFormValid = ({ channelDetails, channelName }) => channelDetails && channelName
   addChannel = () => {
@@ -134,4 +138,4 @@ export class Channels extends Component {
   }
 }
 
-export default Channels
+export default connect(null,{setCurrrentChannel})(Channels)

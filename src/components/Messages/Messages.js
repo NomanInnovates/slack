@@ -1,22 +1,74 @@
 import React from "react";
-import moment from "moment";
-import { Comment } from "semantic-ui-react";
+import { Segment, Comment } from "semantic-ui-react";
+import firebase from "../../firebase";
 
-const isOwnMessage = (message, user) => {
-  return message.user.id === user.uid ? "message__self" : "";
-};
+import MessagesHeader from "./MessagesHeader";
+import MessageForm from "./MessageForm";
+import Message from "./Message";
 
-const timeFromNow = timestamp => moment(timestamp).fromNow();
+class Messages extends React.Component {
+  state = {
+    messagesRef: firebase.database().ref("messages"),
+    messages: [],
+    messagesLoading: true,
+    channel: this.props.currentChannel,
+    user: this.props.currentUser
+  };
 
-const Message = ({ message, user }) => (
-  <Comment>
-    <Comment.Avatar src={message.user.avatar} />
-    <Comment.Content className={isOwnMessage(message, user)}>
-      <Comment.Author as="a">{message.user.name}</Comment.Author>
-      <Comment.Metadata>{timeFromNow(message.timestamp)}</Comment.Metadata>
-      <Comment.Text>{message.content}</Comment.Text>
-    </Comment.Content>
-  </Comment>
-);
+  componentDidMount() {
+    const { channel, user } = this.state;
 
-export default Message;
+    if (channel && user) {
+      this.addListeners(channel.id);
+    }
+  }
+
+  addListeners = channelId => {
+    this.addMessageListener(channelId);
+  };
+
+  addMessageListener = channelId => {
+    let loadedMessages = [];
+    this.state.messagesRef.child(channelId).on("child_added", snap => {
+      loadedMessages.push(snap.val());
+      this.setState({
+        messages: loadedMessages,
+        messagesLoading: false
+      });
+    });
+  };
+
+  displayMessages = messages =>
+    messages.length > 0 &&
+    messages.map(message => (
+      <Message
+        key={message.timestamp}
+        message={message}
+        user={this.state.user}
+      />
+    ));
+
+  render() {
+    const { messagesRef, messages, channel, user } = this.state;
+
+    return (
+      <React.Fragment>
+        <MessagesHeader />
+
+        <Segment>
+          <Comment.Group className="messages">
+            {this.displayMessages(messages)}
+          </Comment.Group>
+        </Segment>
+
+        <MessageForm
+          messagesRef={messagesRef}
+          currentChannel={channel}
+          currentUser={user}
+        />
+      </React.Fragment>
+    );
+  }
+}
+
+export default Messages;

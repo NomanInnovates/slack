@@ -9,7 +9,9 @@ export class Channels extends Component {
   state = {
     channels: [],
     modal: false,
+    firstLoad:true,
     channelName: "",
+    activeChannel:"",
     channelDetails: "",
     user: this.props.currentUser,
     channelsRef: database.ref('channels')
@@ -21,9 +23,16 @@ export class Channels extends Component {
     let loadedChannels = [];
     this.state.channelsRef.on('child_added', snap => {
       loadedChannels.push(snap.val())
-      this.setState({ channels: loadedChannels })
+      this.setState({ channels: loadedChannels },()=>{this.setFirstChannal()})
     })
   }
+  setFirstChannal =  () =>{
+    if(this.state.firstLoad && this.state.channels.length > 0  ){
+      this.changeChannel(this.state.channels[0])
+      this.setState({firstLoad:false})
+    }
+  }
+
   displayChannels = (channels) => (
 
     channels.length > 0 && channels.map((channel) => (<Menu.Item
@@ -33,6 +42,7 @@ export class Channels extends Component {
       style={{
         opacity: 0.7
       }}
+      active={channel.id === this.state.activeChannel}
     >#
       {channel.name}
     </Menu.Item>
@@ -53,7 +63,11 @@ export class Channels extends Component {
       [event.target.name]: event.target.value
     })
   }
+  setActiveChannel =channel=>{
+    this.setState({activeChannel:channel.id})
+  }
   changeChannel = channel =>{
+    this.setActiveChannel(channel)
     this.props.setCurrrentChannel(channel)
   }
   isFormValid = ({ channelDetails, channelName }) => channelDetails && channelName

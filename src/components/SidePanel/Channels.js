@@ -9,9 +9,34 @@ export class Channels extends Component {
     modal: false,
     channelName: "",
     channelDetails: "",
-    user:this.props.currentUser,
-    channelsRef:database.ref('channels')
+    user: this.props.currentUser,
+    channelsRef: database.ref('channels')
   }
+  componentDidMount() {
+    this.addListeners()
+  }
+  addListeners = () => {
+    console.log("addListeners runs")
+    let loadedChannels = [];
+    this.state.channelsRef.on('child_added', snap => {
+      loadedChannels.push(snap.val())
+      this.setState({ channels: loadedChannels })
+    })
+  }
+  displayChannels = (channels) => (
+
+    channels.length > 0 && channels.map((channel) => (<Menu.Item
+      key={channel.id}
+      onClick={() => console.log(channel)}
+      name={channel.name}
+      style={{
+        opacity: 0.7
+      }}
+    >#
+      {channel.name}
+    </Menu.Item>
+    ))
+  )
   closeModal = () => {
     this.setState({
       modal: false
@@ -27,36 +52,37 @@ export class Channels extends Component {
       [event.target.name]: event.target.value
     })
   }
-  isFormValid = ({channelDetails,channelName}) => channelDetails && channelName
+  isFormValid = ({ channelDetails, channelName }) => channelDetails && channelName
   addChannel = () => {
-   const {channelsRef,channelName,channelDetails,user } = this.state
-   const key = channelsRef.push().key
-   let newChannel = {
-    id:key,
-    name:channelName,
-    details:channelDetails,
-    createdBy:{
-      name:user.email || "n/a",
-      avatar:user.photoUrl || "n/a"
+    const { channelsRef, channelName, channelDetails, user } = this.state
+    const key = channelsRef.push().key
+    let newChannel = {
+      id: key,
+      name: channelName,
+      details: channelDetails,
+      createdBy: {
+        name: user.email || "n/a",
+        avatar: user.photoUrl || "n/a"
 
+      }
     }
-   }
-   channelsRef.child(key).update(newChannel).then(()=>{
-    this.setState({channelDetails:"",channelName:""})
-    this.closeModal()
-   }).catch((err)=>{
-    console.log("err",err)
-   })
+    channelsRef.child(key).update(newChannel).then(() => {
+      this.setState({ channelDetails: "", channelName: "" })
+      this.closeModal()
+    }).catch((err) => {
+      console.log("err", err)
+    })
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    if(this.isFormValid(this.state)){
+    if (this.isFormValid(this.state)) {
       this.addChannel()
     }
   }
-  
+
   render() {
+
     const { channels, modal } = this.state
     return <div>
       <Menu.Menu style={{ padding: "2rem" }}>
@@ -67,6 +93,7 @@ export class Channels extends Component {
           ({"  " + channels.length}) <Icon name="add" className="add" onClick={this.openModal} style={{ cursor: "pointer" }} />
         </Menu.Item>
         {/* channels here */}
+        {this.displayChannels(channels)}
       </Menu.Menu>
       <Modal basic open={modal} onClose={this.closeModal}>
         <Modal.Header>Add a Channel</Modal.Header>

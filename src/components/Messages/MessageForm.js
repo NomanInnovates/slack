@@ -6,12 +6,12 @@ import FileModal from "./FileModal";
 
 class MessageForm extends React.Component {
   state = {
-    message: "",
-    channel: this.props.currentChannel,
-    user: this.props.currentUser,
-    loading: false,
     errors: [],
-    modal: false
+    message: "",
+    modal: false,
+    loading: false,
+    user: this.props.currentUser,
+    channel: this.props.currentChannel,
   };
 
   openModal = () => this.setState({ modal: true });

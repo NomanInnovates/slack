@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Dropdown, Grid, Header, Icon } from 'semantic-ui-react'
 import {auth} from '../../firebase'
+
 export class UserPanel extends Component {
     state = {
         user:this.props.currentUser

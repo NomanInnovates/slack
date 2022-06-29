@@ -26,7 +26,7 @@ const App = ({currentUser, currentChannel}) =>
   </Grid>
 
 const mapStateToProps = (state) =>{
-  console.log("State in map",state)
+
 return {
   currentUser: state.user.currentUser,
   currentChannel: state.channel.currentChannel

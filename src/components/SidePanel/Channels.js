@@ -1,9 +1,9 @@
 
 import React, { Component } from 'react'
-import { database } from '../../firebase'
-import { Icon, Menu, Modal, Form, Input, Button } from 'semantic-ui-react'
-import { setCurrrentChannel } from '../../actions'
 import { connect } from 'react-redux'
+import { Icon, Menu, Modal, Form, Input, Button } from 'semantic-ui-react'
+import { database } from '../../firebase'
+import { setCurrrentChannel } from '../../actions'
 
 export class Channels extends Component {
   state = {

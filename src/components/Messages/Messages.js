@@ -41,9 +41,9 @@ class Messages extends React.Component {
 
     displayMessages = messages =>
         messages.length > 0 &&
-        messages.map(message => (
+        messages.map((message,index) => (
             <Message
-                key={message.timestamp}
+                key={message.timestamp || index}
                 message={message}
                 user={this.state.user}
             />

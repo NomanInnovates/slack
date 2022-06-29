@@ -24,10 +24,10 @@ class MessageForm extends React.Component {
 
   createMessage = () => {
     const message = {
-      timestamp: database.ServerValue.TIMESTAMP,
+      timestamp: new Date,
       user: {
         id: this.state.user.uid,
-        name: this.state.user.displayName,
+        name: this.state.user.email,
         avatar: this.state.user.photoURL
       },
       content: this.state.message
@@ -42,7 +42,7 @@ class MessageForm extends React.Component {
     if (message) {
       this.setState({ loading: true });
       messagesRef
-        .child(channel.id)
+        .child(this.props.currentChannel.id)
         .push()
         .set(this.createMessage())
         .then(() => {

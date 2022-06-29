@@ -1,5 +1,5 @@
 import React from "react";
-import firebase from "../../firebase";
+import {database} from "../../firebase";
 import { Segment, Button, Input } from "semantic-ui-react";
 
 import FileModal from "./FileModal";
@@ -24,7 +24,7 @@ class MessageForm extends React.Component {
 
   createMessage = () => {
     const message = {
-      timestamp: firebase.database.ServerValue.TIMESTAMP,
+      timestamp: database.ServerValue.TIMESTAMP,
       user: {
         id: this.state.user.uid,
         name: this.state.user.displayName,

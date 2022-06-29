@@ -17,7 +17,7 @@ class Messages extends React.Component {
 
     componentDidMount() {
         setTimeout(()=>{
-            console.log("sate in mount",this.state)
+        
 
             const { channel, user } = this.state;
             
@@ -53,9 +53,9 @@ class Messages extends React.Component {
         ));
 
     render() {
-        console.log("props",this.props)
+       
         const { messagesRef, messages, channel, user } = this.state;
-        console.log("state", this.state)
+      
         return (
             <React.Fragment>
                 <MessagesHeader />

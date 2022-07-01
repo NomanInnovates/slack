@@ -4,6 +4,7 @@ import App from "./components/App";
 import { createStore } from "redux";
 import "semantic-ui-css/semantic.min.css";
 import { Provider, connect } from "react-redux";
+import { composeWithDevTools } from 'redux-devtools-extension'
 import { BrowserRouter as Router, Switch, Route, withRouter } from "react-router-dom";
 import Spinner from "./Spinner";
 import { auth } from './firebase'
@@ -12,7 +13,6 @@ import Login from "./components/Auth/Login";
 import { setUser, clearUser } from "./actions";
 import Register from "./components/Auth/Register";
 import registerServiceWorker from "./registerServiceWorker";
-import { composeWithDevTools } from 'redux-devtools-extension'
 
 const store = createStore(rootReducer, composeWithDevTools())
 

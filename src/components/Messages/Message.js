@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 import { Comment } from "semantic-ui-react";
 import placeholder from '../../assets/placeholder.png'
+
 const isOwnMessage = (message, user) => {
   return message.user.id === user.uid ? "message__self" : "";
 };

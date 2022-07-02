@@ -4,11 +4,7 @@ import "firebase/auth";
 import "firebase/database";
 
 // import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCvK40gxpYPs-2SWtqzPTRM7jg_b3zs_OQ",
   authDomain: "slack-clone-e23c4.firebaseapp.com",
@@ -27,8 +23,3 @@ export default app;
 export  const auth = app.auth();
 export const database = app.database();
 
-// export const db = app.firestore();
-// export const storage = firebase.storage();
-// export const authen = firebase.auth();
-
-// const analytics = getAnalytics(app);

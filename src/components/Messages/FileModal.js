@@ -23,7 +23,7 @@ class FileModal extends React.Component {
     if (file) {
       let { uploadFile, closeModal } = this.props
       if (this.authorized(file.name)) {
-        uploadFile(filename)
+        uploadFile(file)
         this.clearFile()
         closeModal()
       }

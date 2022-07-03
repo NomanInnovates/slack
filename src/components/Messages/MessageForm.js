@@ -101,7 +101,7 @@ class MessageForm extends React.Component {
             labelPosition="right"
             icon="cloud upload"
           />
-          <FileModal modal={modal} closeModal={this.closeModal} uploadFile={uploadFile}/>
+          <FileModal modal={modal} closeModal={this.closeModal} uploadFile={this.uploadFile}/>
         </Button.Group>
       </Segment>
     );

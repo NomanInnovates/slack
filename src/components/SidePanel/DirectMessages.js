@@ -67,7 +67,7 @@ class DirectMessages extends Component {
     render() {
         let { users } = this.state
         return (
-            <Menu.Menu className="menu">
+            <Menu.Menu className="menu"> 
 
                 <Menu.Item>
                     <span>

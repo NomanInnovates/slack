@@ -73,8 +73,7 @@ class MessageForm extends React.Component {
     }
   };
   uploadFile = (file,metaData) => {
-    console.log("uploadFile",file)
-    console.log("metaData",metaData)
+   
     let pathToUpload = this.state.channel.id
     let ref = this.props.messagesRef;
     const filePath = `chat/public${uuidv4()}.jpg`

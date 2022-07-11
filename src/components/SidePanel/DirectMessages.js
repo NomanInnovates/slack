@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { Icon, Menu } from 'semantic-ui-react'
 import { database } from '../../firebase'
-import {setCurrentChannel ,setPrivateChannel  } from '../../actions'
+import { setCurrentChannel, setPrivateChannel } from '../../actions'
 
 class DirectMessages extends Component {
     state = {
@@ -69,20 +69,20 @@ class DirectMessages extends Component {
     changeChannel = user => {
         const channelId = this.getChannelId(user.uid)
         const channelData = {
-            id:channelId,
-            name :user.name
+            id: channelId,
+            name: user.name
         }
         this.props.setCurrentChannel(channelData)
         this.props.setPrivateChannel(true)
     }
-    getChannelId = uid => {
+    getChannelId = userId => {
         const currentUserId = this.state.user.uid
         return userId < currentUserId ? `${userId}/${currentUserId}` : `${currentUserId}/${userId}`
     }
     render() {
         let { users } = this.state
         return (
-            <Menu.Menu className="menu"> 
+            <Menu.Menu className="menu">
 
                 <Menu.Item>
                     <span>
@@ -92,8 +92,8 @@ class DirectMessages extends Component {
                 {/* user to send msg directly */}
                 {users.map(user => {
                     <Menu.Item key={user.uid}
-                    style={{opacity:0.7,fontStyle:"italic"}}
-                    onClick={() => console.log(user)}>
+                        style={{ opacity: 0.7, fontStyle: "italic" }}
+                        onClick={() => console.log(user)}>
                         <Icon name="circle" color={this.isUserOnline(user) ? "green" : 'red'} />
                         @ {user.name}
                     </Menu.Item>
@@ -105,4 +105,4 @@ class DirectMessages extends Component {
 const mapStateToProps = state => {
     return state
 }
-export default connect(null, {setCurrentChannel})(DirectMessages)
+export default connect(null, { setCurrentChannel })(DirectMessages)

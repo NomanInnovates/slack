@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Icon, Menu, Modal, Form, Input, Button } from 'semantic-ui-react'
 import { database } from '../../firebase'
-import { setCurrrentChannel } from '../../actions'
+import { setCurrentChannel } from '../../actions'
 
 export class Channels extends Component {
   state = {
@@ -46,7 +46,7 @@ export class Channels extends Component {
   }
   changeChannel = channel =>{
     this.setActiveChannel(channel)
-    this.props.setCurrrentChannel(channel)
+    this.props.setCurrentChannel(channel)
   }
   isFormValid = ({ channelDetails, channelName }) => channelDetails && channelName
   addChannel = () => {
@@ -161,4 +161,4 @@ export class Channels extends Component {
   }
 }
 
-export default connect(null,{setCurrrentChannel})(Channels)
+export default connect(null,{setCurrentChannel})(Channels)

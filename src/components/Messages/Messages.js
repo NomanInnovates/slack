@@ -9,6 +9,7 @@ import MessagesHeader from "./MessagesHeader";
 class Messages extends React.Component {
     state = {
         messages: [],
+        progressBar:false,
         messagesLoading: true,
         user: this.props.currentUser,
         channel: this.props.currentChannel,
@@ -48,14 +49,18 @@ class Messages extends React.Component {
                 user={this.state.user}
             />
         ));
-
+    isProgressBarVissible = percent =>{
+        if(percent > 0){
+            this.setState({progressBar:true})
+        }
+    }
     render() {
-        const { messagesRef, messages, channel, user } = this.state;
+        const { messagesRef, messages, channel, user,progressBar } = this.state;
         return (
             <React.Fragment>
                 <MessagesHeader />
                 <Segment>
-                    <Comment.Group className="messages">
+                    <Comment.Group className={progressBar ? "messages__progress" :"messages"}>
                         {this.displayMessages(messages)}
                     </Comment.Group>
                 </Segment>
@@ -63,6 +68,7 @@ class Messages extends React.Component {
                     messagesRef={messagesRef}
                     currentChannel={this.props.currentChannel}
                     currentUser={user}
+                    isProgressBarVisible={this.isProgressBarVissible}
                 />
             </React.Fragment>
         );

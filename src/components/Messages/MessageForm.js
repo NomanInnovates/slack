@@ -4,6 +4,7 @@ import uuidv4 from 'uuid/v4'
 import { Segment, Button, Input } from "semantic-ui-react";
 
 import FileModal from "./FileModal";
+import ProgressBar from "./ProgressBar/ProgressBar";
 
 class MessageForm extends React.Component {
   state = {
@@ -29,7 +30,7 @@ class MessageForm extends React.Component {
 
   createMessage = (fileUrl = null) => {
     const message = {
-      timestamp: new Date,
+      timestamp: new Date(),
       user: {
         id: this.state.user.uid,
         name: this.state.user.email,
@@ -84,7 +85,8 @@ class MessageForm extends React.Component {
     },
       () => {
         this.state.uploadTask.on("state_changed", snap => {
-          const percentUploaded = Math.round((snap.bytesTransferred / snap.totalBytes) * 100)
+          const percentUploaded = (snap.bytesTransferred / snap.totalBytes) * 100
+          this.props.isProgressBarVisible(percentUploaded)
           this.setState({
             percentUploaded
           })
@@ -125,7 +127,8 @@ class MessageForm extends React.Component {
 
   }
   render() {
-    const { errors, message, loading, modal } = this.state;
+    console.log("percentUploaded",this.state.percentUploaded)
+    const { errors, message, loading, modal,percentUploaded,uploadState } = this.state;
 
     return (
       <Segment className="message__form">
@@ -160,8 +163,13 @@ class MessageForm extends React.Component {
             labelPosition="right"
             icon="cloud upload"
           />
-          <FileModal modal={modal} closeModal={this.closeModal} uploadFile={this.uploadFile} />
         </Button.Group>
+          <FileModal modal={modal} closeModal={this.closeModal} uploadFile={this.uploadFile} />
+          <ProgressBar 
+          uploadState={uploadState}
+          percentUploaded={percentUploaded}
+          />
+
       </Segment>
     );
   }

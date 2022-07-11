@@ -5,6 +5,10 @@ body,
   background: #eee;
   padding: 1em;
 }
+/* sidepanel */
+.menu{
+  padding-bottom: 2em;
+}
 /* Messages.js */
 .messages {
   height: 62vh;

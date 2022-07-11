@@ -34,6 +34,11 @@ let {type,payload} = action
                 ...state,
                 currentChannel:payload.currentChannel
             }
+        case actionTypes.SET_PRIVATE_CHANNEL:
+            return{
+                ...state,
+                isPrivateChannel:payload.isPrivateChannel
+            }
         default:
             return state
 

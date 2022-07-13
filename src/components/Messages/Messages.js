@@ -74,7 +74,7 @@ class Messages extends React.Component {
 
     starChannel = () => {
         if(this.state.isChannelStarred){
-            console.log("star")
+        
             this.state.usersRef.child(`${this.state.user.uid}/starred`).update({
                 [this.state.channel.id]:{
                     name:this.state.channel.name,
@@ -91,7 +91,7 @@ class Messages extends React.Component {
                     console.error(err)
                 }
             })
-            console.log("un star")
+       
 
         }
     }

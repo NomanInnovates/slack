@@ -1,5 +1,5 @@
 import React from "react";
-import {auth} from "../../firebase";
+import { auth } from "../../firebase";
 import {
   Grid,
   Form,
@@ -20,12 +20,12 @@ class Login extends React.Component {
   };
 
   isFormEmpty = ({ email, password }) => {
-    return  !email.length || !password.length 
+    return !email.length || !password.length
   }
   isPasswordValid = ({ password }) => {
-    if (password.length < 6 ) {
+    if (password.length < 6) {
       return false
-    }  else {
+    } else {
       return true
     }
   }
@@ -35,18 +35,18 @@ class Login extends React.Component {
 
     if (this.isFormEmpty(this.state)) {
       // throw error
-     
+
       error = { message: " Fill All fields" }
       this.setState({ errors: errors.concat(error) })
     }
     else if (!this.isPasswordValid(this.state)) {
       // throw error
-     
+
       error = { message: "Password is invalid" }
       this.setState({ errors: errors.concat(error) })
     }
     else {
-    
+
       return true
     }
   }
@@ -61,10 +61,10 @@ class Login extends React.Component {
       this.setState({ loading: true })
       auth.signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((user) => {
-          console.log("user", user)
+
           this.setState({ loading: true })
         }).catch(err => {
-          console.log(err)
+
           this.setState({
             errors: this.state.errors.concat(err),
             loading: false

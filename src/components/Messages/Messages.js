@@ -118,6 +118,7 @@ class Messages extends React.Component {
                 <MessageForm
                     currentUser={user}
                     messagesRef={messagesRef}
+                    isPrivateChannel={privateChannel}
                     getMessagesRef={this.getMessagesRef}
                     currentChannel={this.props.currentChannel}
                     isProgressBarVisible={this.isProgressBarVissible}

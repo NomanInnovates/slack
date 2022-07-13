@@ -75,6 +75,7 @@ class MessageForm extends React.Component {
     }
   };
   getPath = () =>{
+    console.log("getPath",this.props.isPrivateChannel)
     if(this.props.isPrivateChannel){
       return `chat/private-${this.state.channel.id}`
     }else{
@@ -84,7 +85,7 @@ class MessageForm extends React.Component {
   uploadFile = (file,metaData) => {
    
     let pathToUpload = this.state.channel.id
-    let ref = this.props.messagesRef;
+    let ref = this.props.getMessagesRef();
     const filePath = `${this.getPath()}${uuidv4()}.jpg`
 
     this.setState({

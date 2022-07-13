@@ -1,5 +1,5 @@
 import React from "react";
-import { storage } from "../../firebase";
+import { database, storage } from "../../firebase";
 import uuidv4 from 'uuid/v4'
 import { Segment, Button, Input } from "semantic-ui-react";
 
@@ -15,9 +15,10 @@ class MessageForm extends React.Component {
     loading: false,
     uploadTask: null,
     percentUploaded: 0,
+    storageRef: storage.ref(),
     user: this.props.currentUser,
     channel: this.props.currentChannel,
-    storageRef: storage.ref(),
+   
   };
 
   openModal = () => this.setState({ modal: true });
@@ -48,12 +49,12 @@ class MessageForm extends React.Component {
   };
 
   sendMessage = () => {
-    const { messagesRef } = this.props;
+    const { getMessagesRef } = this.props;
     const { message, channel } = this.state;
 
     if (message) {
       this.setState({ loading: true });
-      messagesRef
+      getMessagesRef()
         .child(this.props.currentChannel.id)
         .push()
         .set(this.createMessage())
@@ -73,11 +74,18 @@ class MessageForm extends React.Component {
       });
     }
   };
+  getPath = () =>{
+    if(this.props.isPrivateChannel){
+      return `chat/private-${this.state.channel.id}`
+    }else{
+      return `chat/public`
+    }
+  }
   uploadFile = (file,metaData) => {
    
     let pathToUpload = this.state.channel.id
     let ref = this.props.messagesRef;
-    const filePath = `chat/public${uuidv4()}.jpg`
+    const filePath = `${this.getPath()}${uuidv4()}.jpg`
 
     this.setState({
       uploadState: "uploading",

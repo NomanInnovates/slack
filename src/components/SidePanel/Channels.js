@@ -67,7 +67,7 @@ export class Channels extends Component {
       this.setState({ channelDetails: "", channelName: "" })
       this.closeModal()
     }).catch((err) => {
-      console.log("err", err)
+      console.error("err", err)
     })
   }
 

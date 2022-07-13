@@ -86,8 +86,7 @@ class DirectMessages extends Component {
         })
     }
     getChannelId = userId => {
-        console.log("userId",userId)
-        console.log("currentUserId",currentUserId)
+  
         const currentUserId = this.state.user.uid
         return userId < currentUserId ? `${userId}/${currentUserId}` : `${currentUserId}/${userId}`
     }

@@ -8,6 +8,7 @@ class DirectMessages extends Component {
     state = {
         users: [],
         user: {},
+        activeChannel:'',
         userRef: database.ref('users'),
         presenceRef: database.ref('info/connected'),
         connectedRef: database.ref('info/connected')
@@ -77,6 +78,12 @@ class DirectMessages extends Component {
         }
         this.props.setCurrentChannel(channelData)
         this.props.setPrivateChannel(true)
+        this.setActiveChannel(user.uid)
+    }
+    setActiveChannel = uid => {
+        this.setState({
+            setActiveChannel:uid
+        })
     }
     getChannelId = userId => {
         console.log("userId",userId)
@@ -85,10 +92,10 @@ class DirectMessages extends Component {
         return userId < currentUserId ? `${userId}/${currentUserId}` : `${currentUserId}/${userId}`
     }
     render() {
-        let { users } = this.state
+        let { users,activeChannel } = this.state
   
         return (
-            <Menu.Menu className="menu">
+            <Menu.Menu className="menu" style={{padding:"2em"}}>
 
                 <Menu.Item>
                     <span>
@@ -98,7 +105,9 @@ class DirectMessages extends Component {
                 {/* user to send msg directly */}
                 {users.map(user => {
                 
-                    return<Menu.Item key={user.uid}
+                    return<Menu.Item
+                     key={user.uid}
+                     active={user.uid === activeChannel}
                         style={{ opacity: 0.7, fontStyle: "italic" }}
                         onClick={() => this.changeChannel(user)}>
                         <Icon name="circle" color={this.isUserOnline(user) ? "green" : 'red'} />

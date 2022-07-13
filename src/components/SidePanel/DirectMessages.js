@@ -7,7 +7,7 @@ import { setCurrentChannel, setPrivateChannel } from '../../actions'
 class DirectMessages extends Component {
     state = {
         users: [],
-        user: this.props.currentUser,
+        user: {},
         userRef: database.ref('users'),
         presenceRef: database.ref('info/connected'),
         connectedRef: database.ref('info/connected')
@@ -15,6 +15,9 @@ class DirectMessages extends Component {
     componentDidMount() {
         if (this.state.user) {
             this.addListeners(this.state.user.uid)
+            this.setState({
+                user: this.props.currentUser
+            })
         }
     }
     addListeners = currentUserUid => {
@@ -76,11 +79,14 @@ class DirectMessages extends Component {
         this.props.setPrivateChannel(true)
     }
     getChannelId = userId => {
+        console.log("userId",userId)
+        console.log("currentUserId",currentUserId)
         const currentUserId = this.state.user.uid
         return userId < currentUserId ? `${userId}/${currentUserId}` : `${currentUserId}/${userId}`
     }
     render() {
         let { users } = this.state
+  
         return (
             <Menu.Menu className="menu">
 
@@ -91,9 +97,10 @@ class DirectMessages extends Component {
                 </Menu.Item>
                 {/* user to send msg directly */}
                 {users.map(user => {
-                    <Menu.Item key={user.uid}
+                
+                    return<Menu.Item key={user.uid}
                         style={{ opacity: 0.7, fontStyle: "italic" }}
-                        onClick={() => console.log(user)}>
+                        onClick={() => this.changeChannel(user)}>
                         <Icon name="circle" color={this.isUserOnline(user) ? "green" : 'red'} />
                         @ {user.name}
                     </Menu.Item>
@@ -105,4 +112,4 @@ class DirectMessages extends Component {
 const mapStateToProps = state => {
     return state
 }
-export default connect(null, { setCurrentChannel })(DirectMessages)
+export default connect(null, {setPrivateChannel, setCurrentChannel })(DirectMessages)

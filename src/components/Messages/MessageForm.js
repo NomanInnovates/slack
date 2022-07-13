@@ -127,7 +127,7 @@ class MessageForm extends React.Component {
 
   }
   render() {
-    console.log("percentUploaded",this.state.percentUploaded)
+   
     const { errors, message, loading, modal,percentUploaded,uploadState } = this.state;
 
     return (

@@ -15,7 +15,7 @@ class Messages extends React.Component {
         numUniqueUsers: "",
         searchLoading: false,
         messagesLoading: true,
-        isChannelStarred:false,
+        isChannelStarred: false,
         user: this.props.currentUser,
         channel: this.props.currentChannel,
         privateChannel: this.props.isPrivateChannel,
@@ -29,7 +29,7 @@ class Messages extends React.Component {
             const { channel, user } = this.state;
             if (this.props.currentChannel && user) {
                 this.addListeners(this.props.currentChannel.id);
-                this.addUserStarListener(channel.id,user.uid)
+                this.addUserStarListener(channel.id, user.uid)
             }
         }, 1000)
     }
@@ -37,13 +37,13 @@ class Messages extends React.Component {
     addListeners = channelId => {
         this.addMessageListener(channelId);
     };
-    addUserStarListener = (channelId,userId) => {
-        this.state.usersRef.child(userId).child("starred").once('value').then(data=>{
-            if(data.val() !== null ){
-                const channelIds = Object.keys(data.val() )
+    addUserStarListener = (channelId, userId) => {
+        this.state.usersRef.child(userId).child("starred").once('value').then(data => {
+            if (data.val() !== null) {
+                const channelIds = Object.keys(data.val())
                 const prevStarred = channelIds.includes(channelId)
                 this.setState({
-                    isChannelStarred:prevStarred
+                    isChannelStarred: prevStarred
                 })
             }
         })
@@ -67,31 +67,31 @@ class Messages extends React.Component {
         return privateChannel ? privateMessagesRef : messagesRef
     }
     handleStar = () => {
-        this.setState((prevState)=> ({
-            isChannelStarred:!prevState.isChannelStarred
-        }),() => this.starChannel())
+        this.setState((prevState) => ({
+            isChannelStarred: !prevState.isChannelStarred
+        }), () => this.starChannel())
     }
 
     starChannel = () => {
-        if(this.state.isChannelStarred){
-        
+        if (this.state.isChannelStarred) {
+
             this.state.usersRef.child(`${this.state.user.uid}/starred`).update({
-                [this.state.channel.id]:{
-                    name:this.state.channel.name,
-                    details:this.state.channel.details,
-                    createdBy:{
-                        name:this.state.channel.createdBy.name,
-                        avatar:this.state.channel.createdBy.avatar
+                [this.state.channel.id]: {
+                    name: this.state.channel.name,
+                    details: this.state.channel.details,
+                    createdBy: {
+                        name: this.state.channel.createdBy.name,
+                        avatar: this.state.channel.createdBy.avatar
                     }
                 }
             })
-        }else{
-            this.state.usersRef.child(`${this.state.user.uid}/starred`).remove(err =>{
-                if(err !== null){
+        } else {
+            this.state.usersRef.child(`${this.state.user.uid}/starred`).remove(err => {
+                if (err !== null) {
                     console.error(err)
                 }
             })
-       
+
 
         }
     }
@@ -125,6 +125,20 @@ class Messages extends React.Component {
         }, [])
         this.setState({ searchResults })
     }
+    countUserPosts = messages => {
+        let userPosts = messages.reduce((acc, message) => {
+            if (message.user.email in acc) {
+                acc[message.user.email].count += 1
+            } else {
+                acc[message.user.email] = {
+                    count: 1,
+                    avatar: message.user.avatar
+                }
+            }
+            return acc 
+        }, {})
+        console.log("userPosts",userPosts)
+    }
     displayMessages = messages =>
         messages.length > 0 &&
         messages.map((message, index) => (
@@ -143,7 +157,7 @@ class Messages extends React.Component {
         return channel ? `${this.state.privateChannel ? "@" : "#"} ${channel.name} ` : " "
     }
     render() {
-        const { messagesRef, messages, privateChannel, channel, user, progressBar,isChannelStarred, numUniqueUsers, searchResults, searchTerm } = this.state;
+        const { messagesRef, messages, privateChannel, channel, user, progressBar, isChannelStarred, numUniqueUsers, searchResults, searchTerm } = this.state;
 
         return (
             <React.Fragment>

@@ -95,7 +95,7 @@ class DirectMessages extends Component {
         let { users,activeChannel } = this.state
   
         return (
-            <Menu.Menu className="menu" style={{padding:"2em"}}>
+            <Menu.Menu className="menu" style={{padding:"1em"}}>
 
                 <Menu.Item>
                     <span>

@@ -3,14 +3,19 @@ import { Header, Segment, Input, Icon } from "semantic-ui-react";
 
 class MessagesHeader extends React.Component {
   render() {
-    const { channelName, numUniqueUsers, handleSearchChange, privateChannel } = this.props
+    const { channelName, numUniqueUsers, handleSearchChange, privateChannel, handleStar, isChannelStarred } = this.props
     return (
       <Segment clearing>
         {/* Channel Title */}
         <Header fluid="true" as="h2" floated="left" style={{ marginBottom: 0 }}>
           <span>
             {channelName}
-            {!privateChannel && <Icon name={"star outline"} color="black" />}
+            {!privateChannel && (
+              <Icon
+                color={isChannelStarred ? "yellow" : "black"}
+                onClick={handleStar}
+                name={isChannelStarred ? "star" : "star outline"}
+              />)}
           </span>
           <Header.Subheader>{numUniqueUsers} </Header.Subheader>
         </Header>

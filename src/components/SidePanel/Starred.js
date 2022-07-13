@@ -2,11 +2,41 @@ import React, { Component } from 'react'
 import { Icon, Menu } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { setCurrentChannel, setPrivateChannel } from '../../actions'
+import { database } from '../../firebase'
 
  class Starred extends Component {
     state = {
         activeChannel:"",
-        starredChannels:[]
+        starredChannels:[],
+        user:this.props.currentUser,
+        userRef:database.ref('users')
+    }
+    componentDidMount(){
+        if(this.state.user){
+
+            this.addListener(this.state.user.uid)
+        }
+    }
+    addListener =(userId) => {
+        this.state.userRef.child(userId).child('starred').on('child_added',snap => {
+            const starredChannel = {
+                id:snap.key,...snap.val()
+            }
+            this.setState({
+                starredChannels:[...this.state.starredChannels,starredChannel]
+            })
+        })
+        this.state.userRef.child(userId).child('starred').on('child_removed',snap => {
+            const channelToRemove = {
+                id:snap.key,...snap.val()
+            }
+            const filterChannels = this.state.starredChannels.filter(channel=>{
+                return channel.id !== channelToRemove.id
+            })
+            this.setState({
+                starredChannels:filterChannels
+            })
+        })
     }
     setActiveChannel = channel => {
         this.setState({ activeChannel: channel.id })

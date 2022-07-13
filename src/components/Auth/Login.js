@@ -35,18 +35,18 @@ class Login extends React.Component {
 
     if (this.isFormEmpty(this.state)) {
       // throw error
-      console.log("if")
+     
       error = { message: " Fill All fields" }
       this.setState({ errors: errors.concat(error) })
     }
     else if (!this.isPasswordValid(this.state)) {
       // throw error
-      console.log("else if")
+     
       error = { message: "Password is invalid" }
       this.setState({ errors: errors.concat(error) })
     }
     else {
-      console.log("else ")
+    
       return true
     }
   }

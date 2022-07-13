@@ -5,7 +5,9 @@ import Message from "./Message";
 import firebase from "../../firebase";
 import MessageForm from "./MessageForm";
 import MessagesHeader from "./MessagesHeader";
-
+import { connect } from "react-redux";
+import { setUserPosts } from "../../actions";
+ 
 class Messages extends React.Component {
     state = {
         messages: [],
@@ -138,6 +140,7 @@ class Messages extends React.Component {
             return acc 
         }, {})
         console.log("userPosts",userPosts)
+        this.props.setUserPosts(userPosts)
     }
     displayMessages = messages =>
         messages.length > 0 &&
@@ -187,4 +190,5 @@ class Messages extends React.Component {
     }
 }
 
-export default Messages;
+
+export default connect(null, {setUserPosts })(Messages)

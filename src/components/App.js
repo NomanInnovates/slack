@@ -26,6 +26,7 @@ const App = ({ currentUser, currentChannel, isPrivateChannel ,setUserPosts }) =>
        key={currentChannel && currentChannel.id}
        currentUser={currentUser}
        setUserPosts={setUserPosts}
+       currentChannel={currentChannel}
        isPrivateChannel={isPrivateChannel}
         />
     </GridColumn>

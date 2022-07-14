@@ -35,9 +35,9 @@ const mapStateToProps = (state) => {
 
   return {
     currentUser: state.user.currentUser,
+    setUserPosts:state.channel.setUserPosts,
     currentChannel: state.channel.currentChannel,
     isPrivateChannel: state.channel.isPrivateChannel,
-    setUserPosts:state.channel.setUserPosts
   }
 }
 export default connect(mapStateToProps)(App)

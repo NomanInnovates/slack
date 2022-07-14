@@ -61,6 +61,7 @@ class Messages extends React.Component {
                 messagesLoading: false
             });
             this.countUniqeUsers(loadedMessages)
+            this.countUserPosts(loadedMessages);
         });
     };
 
@@ -129,10 +130,11 @@ class Messages extends React.Component {
     }
     countUserPosts = messages => {
         let userPosts = messages.reduce((acc, message) => {
-            if (message.user.email in acc) {
-                acc[message.user.email].count += 1
+            console.log("message",message)
+            if (message.user.name in acc) {
+                acc[message.user.name].count += 1
             } else {
-                acc[message.user.email] = {
+                acc[message.user.name] = {
                     count: 1,
                     avatar: message.user.avatar
                 }

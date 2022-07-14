@@ -141,7 +141,7 @@ class Messages extends React.Component {
             }
             return acc 
         }, {})
-        console.log("userPosts",userPosts)
+     
         this.props.setUserPosts(userPosts)
     }
     displayMessages = messages =>

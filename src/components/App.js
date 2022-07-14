@@ -9,7 +9,7 @@ import ColorPanel from "./ColorPanel/ColorPanel";
 
 const App = ({ currentUser, currentChannel, isPrivateChannel ,userPosts }) =>
   <Grid columns="equal" className="app" style={{ background: "#eee" }}>
-    <ColorPanel />
+    <ColorPanel currentUser={currentUser} />
 
     <SidePanel key={currentUser && currentUser.uid} currentUser={currentUser} />
     

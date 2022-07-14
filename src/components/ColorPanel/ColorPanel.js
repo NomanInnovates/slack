@@ -10,12 +10,15 @@ import {
     Segment
 } from "semantic-ui-react";
 import { SliderPicker } from "react-color";
+import { database } from "../../firebase";
 
 class ColorPanel extends React.Component {
     state = {
         modal: false,
         primary: "",
-        secondary: ""
+        secondary: "",
+        user:this.props.currentUser,
+        userRef:database.ref('users')
     };
 
     openModal = () => this.setState({ modal: true });
@@ -24,7 +27,16 @@ class ColorPanel extends React.Component {
     handleChangePrimary = color => { this.setState({ primary: color.hex }) }
     handleChangeSecondaryy = color => { this.setState({ secondary: color.hex }) }
     handleSaveColor = () =>{
-        
+        if(this.state.primary && this.state.secondary){
+            this.saveColors()
+        }
+    }
+    saveColors = () => {
+        let {primary,secondary} = this.state
+        this.state.userRef.child(this.state.user.uid+"/colors").push().update({primary,secondary}).then(()=>{
+            console.log("colors added")
+            this.closeModal()
+        }).catch(err => console.error(err))
     }
 
     render() {

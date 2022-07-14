@@ -63,7 +63,6 @@ import { database } from '../../firebase'
         ))
       )
   render() {
-    console.log(this.props)
     let {starredChannels} = this.state
     return (
       <div> <Menu.Menu style={{ padding: "2rem" }}>

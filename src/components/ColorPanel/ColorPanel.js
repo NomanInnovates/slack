@@ -23,7 +23,9 @@ class ColorPanel extends React.Component {
     closeModal = () => this.setState({ modal: false });
     handleChangePrimary = color => { this.setState({ primary: color.hex }) }
     handleChangeSecondaryy = color => { this.setState({ secondary: color.hex }) }
-
+    handleSaveColor = () =>{
+        
+    }
 
     render() {
         const { modal ,primary,secondary} = this.state;
@@ -56,7 +58,7 @@ class ColorPanel extends React.Component {
                         </Segment>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Button color="green" inverted>
+                        <Button color="green" inverted onClick={this.handleSaveColor}>
                             <Icon name="checkmark" /> Save Colors
                         </Button>
                         <Button color="red" inverted onClick={this.closeModal}>

@@ -17,9 +17,25 @@ class ColorPanel extends React.Component {
         modal: false,
         primary: "",
         secondary: "",
+        userColors:[],
         user:this.props.currentUser,
         userRef:database.ref('users')
     };
+    componentDidMount() {
+    if(this.state.user){
+        this.addListener(this.state.user.id)
+    }
+    }
+    addListener = userId => {
+        let userColors = []
+        this.state.userRef.child(userId+"/colors").on("child_added",snap =>{
+            userColors.unshift(snap.val())
+        })
+        this.setState({
+            userColors
+        })
+        console.log(userColors)
+    }
 
     openModal = () => this.setState({ modal: true });
 

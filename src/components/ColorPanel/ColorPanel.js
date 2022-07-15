@@ -54,9 +54,24 @@ class ColorPanel extends React.Component {
             this.closeModal()
         }).catch(err => console.error(err))
     }
+    displayUserColors = colors => {
+        colors.map((color,index) => {
+            <div>
+                <Divider />
+                <div className="color__container">
+                    <div className="color__square" style={{color:color.primary}}>
+                        <div className="color__overlay" style={{color:color.secondary}}>
+                            
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        })
+
+    }
 
     render() {
-        const { modal ,primary,secondary} = this.state;
+        const { modal ,primary,secondary,userColors} = this.state;
 
         return (
             <Sidebar
@@ -69,6 +84,7 @@ class ColorPanel extends React.Component {
             >
                 <Divider />
                 <Button icon="add" size="small" color="blue" onClick={this.openModal} />
+                {userColors && this.displayUserColors(userColors)}
 
                 {/* Color Picker Modal */}
                 <Modal basic open={modal} onClose={this.closeModal}>

@@ -46,3 +46,21 @@ body,
 .ui.comments{
   max-width: 100% !important;
 }
+
+/* colorpanel */
+.color__container{
+  width: 35px;
+  /* height: 35px; */
+  position: relative;
+  overflow:hidden;
+  border-radius: 3px;
+}
+.color__square{
+width: 35px;
+height: 35px;
+}
+.color__overlay{
+  width: 85px;
+  height: 35px;
+  transform:rotate(255deg)
+}

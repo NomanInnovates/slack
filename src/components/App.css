@@ -51,6 +51,7 @@ body,
 .color__container{
   width: 35px;
   /* height: 35px; */
+  cursor: pointer;
   position: relative;
   overflow:hidden;
   border-radius: 3px;

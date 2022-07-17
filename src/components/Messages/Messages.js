@@ -2,7 +2,7 @@ import React from "react";
 import { Segment, Comment } from "semantic-ui-react";
 
 import Message from "./Message";
-import firebase from "../../firebase";
+import {database} from "../../firebase";
 import MessageForm from "./MessageForm";
 import MessagesHeader from "./MessagesHeader";
 import { connect } from "react-redux";
@@ -12,6 +12,7 @@ import Typing from "./Typing/Typing";
 class Messages extends React.Component {
     state = {
         messages: [],
+        typingUsers:[],
         searchTerm: "",
         searchResults: [],
         progressBar: false,
@@ -20,11 +21,13 @@ class Messages extends React.Component {
         messagesLoading: true,
         isChannelStarred: false,
         user: this.props.currentUser,
+        usersRef: database.ref("users"),
+        typingRef: database.ref("typing"),
         channel: this.props.currentChannel,
+        messagesRef: database.ref("messages"),
         privateChannel: this.props.isPrivateChannel,
-        usersRef: firebase.database().ref("users"),
-        messagesRef: firebase.database().ref("messages"),
-        privateMessagesRef: firebase.database().ref('privateMessages'),
+        connectedRef:database.ref(".info/connected"),
+        privateMessagesRef: database.ref('privateMessages'),
     };
 
     componentDidMount() {
@@ -51,6 +54,37 @@ class Messages extends React.Component {
             }
         })
 
+    }
+    addTypingListener = channelId => {
+        let typingUsers = [];
+        this.state.typingRef.child(channelId).on('child_added',snap => {
+            if(snap.key !== this.state.user.uid){
+                typingUsers = typingUsers.concat({
+                    id:snap.key,
+                    name:snap.val()
+                })
+                 this.setState({
+                    typingUsers
+                 })
+            }
+        })
+        this.state.typingRef.child(channelId).on('child_removed',snap => {
+            const index = typingUsers.findIndex(user => user.id === snap.key)
+            if(index !== -1){
+                typingUsers = typingUsers.filter(user => user.id !== snap.key)
+                this.setState({typingUsers})
+            }
+        })
+
+        this.state.connectedRef.on("value",snap => {
+            if(snap.val() === true){
+                this.state.typingRef.child(channelId).child(this.state.user.uid).onDisconnect().remove(err=>{
+                    if(err !== null){
+                        console.error(err)
+                    }
+                })
+            }
+        })
     }
     addMessageListener = channelId => {
         let loadedMessages = [];
@@ -161,8 +195,17 @@ class Messages extends React.Component {
     displayChannelName = (channel) => {
         return channel ? `${this.state.privateChannel ? "@" : "#"} ${channel.name} ` : " "
     }
+    displayTypingUsers = users => {
+        users.length > 0 && users.map((user) => {
+            return <div key={user.id} style={{display:"flex",alignItems:"center", marginBottom:"0.2rem"}}>
+                <span className="user__typing">{user.email} is typing </span> <Typing />
+            </div>
+        })
+    }
     render() {
-        const { messagesRef, messages, privateChannel, channel, user, progressBar, isChannelStarred, numUniqueUsers, searchResults, searchTerm } = this.state;
+        const { messagesRef, messages, privateChannel, channel,
+             user, progressBar, isChannelStarred, numUniqueUsers, 
+             searchResults, searchTerm, typingUsers } = this.state;
 
         return (
             <React.Fragment>
@@ -177,10 +220,7 @@ class Messages extends React.Component {
                 <Segment>
                     <Comment.Group className={progressBar ? "messages__progress" : "messages"}>
                         {searchTerm ? this.displayMessages(searchResults) : this.displayMessages(messages)}
-                        <div style={{display:"flex",alignItems:"center"}}>
-
-                        <span className="user_typing">Noan typing</span><Typing />
-                        </div>
+                        {this.displayTypingUsers(typingUsers)}
                     </Comment.Group>
                 </Segment>
                 <MessageForm

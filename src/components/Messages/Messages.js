@@ -7,6 +7,7 @@ import MessageForm from "./MessageForm";
 import MessagesHeader from "./MessagesHeader";
 import { connect } from "react-redux";
 import { setUserPosts } from "../../actions";
+import Typing from "./Typing/Typing";
  
 class Messages extends React.Component {
     state = {
@@ -176,6 +177,10 @@ class Messages extends React.Component {
                 <Segment>
                     <Comment.Group className={progressBar ? "messages__progress" : "messages"}>
                         {searchTerm ? this.displayMessages(searchResults) : this.displayMessages(messages)}
+                        <div style={{display:"flex",alignItems:"center"}}>
+
+                        <span className="user_typing">Noan typing</span><Typing />
+                        </div>
                     </Comment.Group>
                 </Segment>
                 <MessageForm

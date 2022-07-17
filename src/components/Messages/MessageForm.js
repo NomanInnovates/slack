@@ -17,6 +17,7 @@ class MessageForm extends React.Component {
     percentUploaded: 0,
     storageRef: storage.ref(),
     user: this.props.currentUser,
+    typingRef: database.ref("typing"),
     channel: this.props.currentChannel,
    
   };
@@ -28,7 +29,14 @@ class MessageForm extends React.Component {
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-
+  handleKeyDown = () => {
+    const {message,typingRef,user,channel} = this.state
+    if(message){
+      typingRef.child(channel.id).child(user.uid).set(user.email)
+    }else{
+      typingRef.child(channel.id).child(user.uid).remove()
+    }
+  }
   createMessage = (fileUrl = null) => {
     const message = {
       timestamp: new Date(),
@@ -50,7 +58,7 @@ class MessageForm extends React.Component {
 
   sendMessage = () => {
     const { getMessagesRef } = this.props;
-    const { message, channel } = this.state;
+    const { message, channel,user,typingRef } = this.state;
 
     if (message) {
       this.setState({ loading: true });
@@ -60,6 +68,7 @@ class MessageForm extends React.Component {
         .set(this.createMessage())
         .then(() => {
           this.setState({ loading: false, message: "", errors: [] });
+          typingRef.child(channel.id).child(user.uid).remove()
         })
         .catch(err => {
           console.error(err);
@@ -137,13 +146,14 @@ class MessageForm extends React.Component {
   render() {
    
     const { errors, message, loading, modal,percentUploaded,uploadState } = this.state;
-
+console.log("channel",this.state.channel)
     return (
       <Segment className="message__form">
         <Input
           fluid
           name="message"
           onChange={this.handleChange}
+          onKeyDown={this.handleKeyDown}
           value={message}
           style={{ marginBottom: "0.7em" }}
           label={<Button icon={"add"} />}

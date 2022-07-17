@@ -8,12 +8,16 @@ import { setCurrentChannel, setPrivateChannel } from '../../actions'
 export class Channels extends Component {
   state = {
     channels: [],
+    channel: null,
     modal: false,
     firstLoad: true,
     channelName: "",
+    notifications: [],
     activeChannel: "",
     channelDetails: "",
     user: this.props.currentUser,
+    typingRef: database.ref("typing"),
+    messageRef: database.ref('messages'),
     channelsRef: database.ref('channels')
   }
   componentDidMount() {
@@ -45,9 +49,15 @@ export class Channels extends Component {
     this.setState({ activeChannel: channel.id })
   }
   changeChannel = channel => {
+    let { user,  typingRef } = this.state
     this.setActiveChannel(channel)
+    if(this.state.channel){
+
+      typingRef.child(this.state.channel.id).child(user.uid).remove()
+    }
     this.props.setCurrentChannel(channel)
     this.props.setPrivateChannel(false)
+    this.setState({ channel })
   }
   isFormValid = ({ channelDetails, channelName }) => channelDetails && channelName
   addChannel = () => {

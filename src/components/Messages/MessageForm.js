@@ -5,6 +5,8 @@ import { Segment, Button, Input } from "semantic-ui-react";
 
 import FileModal from "./FileModal";
 import ProgressBar from "./ProgressBar/ProgressBar";
+import {Picker,emojiIndex} from 'emoji-mart'
+import 'emoji-mart/css/emoji-mart.css'
 
 class MessageForm extends React.Component {
   state = {
@@ -14,6 +16,7 @@ class MessageForm extends React.Component {
     uploadState: "",
     loading: false,
     uploadTask: null,
+    emojiPicker:false,
     percentUploaded: 0,
     storageRef: storage.ref(),
     user: this.props.currentUser,
@@ -36,6 +39,14 @@ class MessageForm extends React.Component {
     }else{
       typingRef.child(channel.id).child(user.uid).remove()
     }
+  }
+  handleTogglePicker = () => {
+    this.setState({emojiPicker:!this.state.emojiPicker})
+  }
+  handleAddEmoji = emoji => {
+    let oldMessage = this.state.message;
+    let newMessage = this.colonToUniCode(`${oldMessage} ${emoji.colons}`)
+    this.setState({message:newMessage, emojiPicker:false})
   }
   createMessage = (fileUrl = null) => {
     const message = {
@@ -145,10 +156,17 @@ class MessageForm extends React.Component {
   }
   render() {
    
-    const { errors, message, loading, modal,percentUploaded,uploadState } = this.state;
+    const { errors, message, loading, modal,percentUploaded,uploadState , emojiPicker } = this.state;
 console.log("channel",this.state.channel)
     return (
       <Segment className="message__form">
+        {emojiPicker && <Picker 
+        set="apple"
+        onSelect={this.handleAddEmoji}
+        className="emojipicker"
+        title="Pick Your emoji"
+        emoji="point_up"
+        />}
         <Input
           fluid
           name="message"
@@ -156,7 +174,7 @@ console.log("channel",this.state.channel)
           onKeyDown={this.handleKeyDown}
           value={message}
           style={{ marginBottom: "0.7em" }}
-          label={<Button icon={"add"} />}
+          label={<Button icon={"add"} onClick={this.handleTogglePicker} />}
           labelPosition="left"
           className={
             errors.some(error => error.message.includes("message"))

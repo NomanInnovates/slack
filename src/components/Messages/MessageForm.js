@@ -48,6 +48,20 @@ class MessageForm extends React.Component {
     let newMessage = this.colonToUniCode(`${oldMessage} ${emoji.colons}`)
     this.setState({message:newMessage, emojiPicker:false})
   }
+  colonToUniCode = message => {
+    return message.replace(/:[A-Za-z0-9_+-]+:/g, x => {
+      x = x.replace(/:/g,"");
+      let emoji = emojiIndex.emojis[x];
+      if( typeof emoji !== 'undefined'){
+        let unicode = emoji.native;
+        if(typeof unicode !== "undefined"){
+          return unicode
+        }
+      }
+      x = ":" + x + ":";
+      return x
+    })
+  }
   createMessage = (fileUrl = null) => {
     const message = {
       timestamp: new Date(),
@@ -170,11 +184,14 @@ console.log("channel",this.state.channel)
         <Input
           fluid
           name="message"
+          value={message}
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
-          value={message}
           style={{ marginBottom: "0.7em" }}
-          label={<Button icon={"add"} onClick={this.handleTogglePicker} />}
+          onClick={this.handleTogglePicker}
+          content={emojiPicker  ? 'Close' : null}
+          label={<Button icon={emojiPicker  ? "close" : "add"}
+           />}
           labelPosition="left"
           className={
             errors.some(error => error.message.includes("message"))

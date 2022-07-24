@@ -10,7 +10,7 @@ import {
     Segment
 } from "semantic-ui-react";
 import { SliderPicker } from "react-color";
-import  firebase  from "../../firebase";
+import firebase from "../../firebase";
 import { setColors } from "../../actions";
 import { connect } from "react-redux";
 
@@ -25,32 +25,32 @@ class ColorPanel extends React.Component {
         userRef: firebase.database().ref('users')
     };
     componentDidMount() {
-      
-        setTimeout(()=>{
+
+        setTimeout(() => {
 
             if (this.state.user) {
                 this.addListener(this.state.user.id)
             }
-        },1000)
+        }, 1000)
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.removeListener()
     }
     removeListener = () => {
         this.state.userRef.child(`${this.state.user.uid}/color`).off()
-    } 
+    }
     addListener = userId => {
         console.log("addListener")
         let userColors = []
         this.state.userRef.child(userId + "/colors").on("child_added", snap => {
-            console.log("snap",snap.val())
+            console.log("snap", snap.val())
             userColors.unshift(snap.val())
         })
         this.setState({
             userColors
         })
-        console.log(userColors)
+        
     }
 
     openModal = () => this.setState({ modal: true });
@@ -71,7 +71,7 @@ class ColorPanel extends React.Component {
         }).catch(err => console.error(err))
     }
     displayUserColors = colors => {
-        colors.map((color, index) => {
+        return colors.map((color, index) => (
             <div>
                 <Divider />
                 <div className="color__container"
@@ -83,14 +83,14 @@ class ColorPanel extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
-        })
+            </div>)
+        )
 
     }
 
     render() {
-        const { modal, primary, secondary, userColors,user } = this.state;
-        console.log("userColors",user.uid)
+        const { modal, primary, secondary, userColors, user } = this.state;
+      
         return (
             <Sidebar
                 as={Menu}
@@ -133,4 +133,4 @@ class ColorPanel extends React.Component {
     }
 }
 
-export default  connect(null,{setColors}) (ColorPanel);
+export default connect(null, { setColors })(ColorPanel);

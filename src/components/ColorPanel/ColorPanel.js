@@ -41,7 +41,7 @@ class ColorPanel extends React.Component {
         this.state.userRef.child(`${this.state.user.uid}/color`).off()
     }
     addListener = userId => {
-        console.log("addListener")
+        
         let userColors = []
         this.state.userRef.child(userId + "/colors").on("child_added", snap => {
             console.log("snap", snap.val())

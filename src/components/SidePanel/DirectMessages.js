@@ -21,6 +21,12 @@ class DirectMessages extends Component {
             })
         }
     }
+    componentWillUnmount(){
+        let {userRef ,presenceRef,connectedRef} =this.state
+        userRef.off()
+        presenceRef.off()
+        connectedRef.off()
+    }
     addListeners = currentUserUid => {
         let loadedUser = [];
         this.state.userRef.on("child_added", snap => {

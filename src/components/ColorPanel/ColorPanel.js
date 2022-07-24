@@ -25,14 +25,21 @@ class ColorPanel extends React.Component {
         userRef: firebase.database().ref('users')
     };
     componentDidMount() {
-        console.log("conponent ")
+      
         setTimeout(()=>{
-console.log("timout")
+
             if (this.state.user) {
                 this.addListener(this.state.user.id)
             }
         },1000)
     }
+
+    componentWillUnmount(){
+        this.removeListener()
+    }
+    removeListener = () => {
+        this.state.userRef.child(`${this.state.user.uid}/color`).off()
+    } 
     addListener = userId => {
         console.log("addListener")
         let userColors = []

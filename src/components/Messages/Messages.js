@@ -46,6 +46,9 @@ class Messages extends React.Component {
             this.scrollToBottom()
         }
     }
+    componentWillUnmount(){
+        this.state.connectedRef.off()
+    }
 
     scrollToBottom = () => {
         this.messagesEnd.scrollIntoView({behavior:'smooth'})

@@ -67,7 +67,7 @@ export class UserPanel extends Component {
             console.error(e)
         })
         this.state.usersRef.child(this.state.user.uid).update({ avatar: this.state.uploadedCroppedImage }).then(() => {
-            console.log("user avatar ")
+           
             this.setState({ modal: false })
         }).catch((err) => console.error(err))
     }
@@ -94,7 +94,7 @@ export class UserPanel extends Component {
     render() {
         //   let {primaryColor} =this.props
         let { modal, user, previewImage, croppedImage } = this.state
-        console.log("user", user)
+        
         return (
             <Grid style={{ background: "#4c3c4c", }}>
                 <Grid.Column>

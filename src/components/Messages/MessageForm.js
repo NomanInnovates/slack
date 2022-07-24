@@ -32,7 +32,10 @@ class MessageForm extends React.Component {
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-  handleKeyDown = () => {
+  handleKeyDown = event => {
+    if(event.ctrlKey && event.keyCode === 17){
+      this.sendMessage()
+    }
     const {message,typingRef,user,channel} = this.state
     if(message){
       typingRef.child(channel.id).child(user.uid).set(user.email)
@@ -171,7 +174,7 @@ class MessageForm extends React.Component {
   render() {
    
     const { errors, message, loading, modal,percentUploaded,uploadState , emojiPicker } = this.state;
-console.log("channel",this.state.channel)
+
     return (
       <Segment className="message__form">
         {emojiPicker && <Picker 
@@ -186,7 +189,7 @@ console.log("channel",this.state.channel)
           name="message"
           value={message}
           onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}
+          onKeyDown={(e) => this.handleKeyDown(e)}
           style={{ marginBottom: "0.7em" }}
           
           content={emojiPicker  ? 'Close' : null}

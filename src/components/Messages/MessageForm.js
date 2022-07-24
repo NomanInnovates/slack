@@ -188,9 +188,9 @@ console.log("channel",this.state.channel)
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
           style={{ marginBottom: "0.7em" }}
-          onClick={this.handleTogglePicker}
+          
           content={emojiPicker  ? 'Close' : null}
-          label={<Button icon={emojiPicker  ? "close" : "add"}
+          label={<Button onClick={this.handleTogglePicker} icon={emojiPicker  ? "close" : "add"}
            />}
           labelPosition="left"
           className={

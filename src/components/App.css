@@ -137,7 +137,7 @@ height: 35px;
   animation: sweep 2s infinite;
   background-image: linear-gradient(to left,transparent, rgba(225,225,225,0.4),transparent);
 }
-@keyframs sweep {
+@keyframes sweep {
   0%{
     transform:translate(-100%)
   }

@@ -1,19 +1,22 @@
 html,
 body,
 .app {
+  padding: 1em;
   height: 100vh;
   background: #eee;
-  padding: 1em;
 }
+
 /* sidepanel */
-.menu{
+.menu {
   padding-bottom: 2em;
 }
+
 /* Messages.js */
 .messages {
   height: 62vh;
   overflow-y: scroll;
 }
+
 .messages__progress {
   height: 58vh;
   overflow-y: scroll;
@@ -21,113 +24,127 @@ body,
 
 /* MessageForm.js */
 .message__form {
-  position: fixed !important;
-  bottom: 1em;
-  margin-left: 320px !important;
   left: 0;
   right: 1em;
+  bottom: 1em;
   z-index: 200;
+  position: fixed !important;
+  margin-left: 320px !important;
 }
-.emojipicker{
-  position: absolute  ;
+
+.emojipicker {
+  position: absolute;
 }
 
 /* Message.js */
 .message__self {
-  border-left: 2px solid orange;
   padding-left: 8px;
+  border-left: 2px solid orange;
 }
 
 .message__image {
   padding: 1em;
 }
+
 /* progress__bar */
-.progress__bar{
+.progress__bar {
   margin: 0.3em 0 0 0 !important;
 }
+
 /*  */
-.ui.comments{
+.ui.comments {
   max-width: 100% !important;
 }
 
 /* colorpanel */
-.color__container{
+.color__container {
   width: 35px;
   /* height: 35px; */
   cursor: pointer;
+  overflow: hidden;
   position: relative;
-  overflow:hidden;
   border-radius: 3px;
 }
-.color__square{
-width: 35px;
-height: 35px;
+
+.color__square {
+  width: 35px;
+  height: 35px;
 }
-.color__overlay{
+
+.color__overlay {
   width: 85px;
   height: 35px;
-  transform:rotate(255deg)
+  transform: rotate(255deg)
 }
+
 /* typing  */
-.user_typing{
-  font-style: italic;
+.user_typing {
   font-weight: bold;
   margin-right: 3px;
+  font-style: italic;
 }
-.typing{
+
+.typing {
   width: 5em;
-  position: relative;
   padding: 10px;
   margin-left: 5px;
-  background: #e6e6e6;
+  position: relative;
   border-radius: 20px;
+  background: #e6e6e6;
 }
-.typing__dot{
-  float: left;
-  width: 8px;
-  height: 8px;
-  margin:0 4px;
-  background:#8d8c91;
-  border-radius: 50%;
+
+.typing__dot {
   opacity: 0;
+  width: 8px;
+  float: left;
+  height: 8px;
+  margin: 0 4px;
+  border-radius: 50%;
+  background: #8d8c91;
   animation: loadingFase 1s infinite;
 }
 
-.typing__dot:nth-child(1){
-  animation-delay:0s;
+.typing__dot:nth-child(1) {
+  animation-delay: 0s;
 
 }
-.typing__dot:nth-child(2){
-  animation-delay:.2s;
-  
+
+.typing__dot:nth-child(2) {
+  animation-delay: .2s;
+
 }
-.typing__dot:nth-child(3){
-  animation-delay:.4s;
-  
+
+.typing__dot:nth-child(3) {
+  animation-delay: .4s;
+
 }
+
 @keyframes loadingFase {
-  0%{
+  0% {
     opacity: 0;
   }
-  50%{
+
+  50% {
     opacity: 0.8;
 
   }
-  100%{
+
+  100% {
     opacity: 0;
 
   }
 }
 
 /* skeleton */
-.skeleton{
+.skeleton {
   height: 40px;
   overflow: hidden;
   position: relative;
   margin-bottom: 10px;
 }
-.skeleton::after{
-  content:'';
+
+.skeleton::after {
+  content: '';
   display: block;
   position: absolute;
   top: 0;
@@ -135,44 +152,48 @@ height: 35px;
   width: 50%;
   height: 100%;
   animation: sweep 2s infinite;
-  background-image: linear-gradient(to left,transparent, rgba(225,225,225,0.4),transparent);
+  background-image: linear-gradient(to left, transparent, rgba(225, 225, 225, 0.4), transparent);
 }
+
 @keyframes sweep {
-  0%{
-    transform:translate(-100%)
+  0% {
+    transform: translate(-100%)
   }
-  50%{
-    transform:translate(150%)
 
+  50% {
+    transform: translate(150%)
   }
-  100%{
-    transform:translate(-100%)
 
+  100% {
+    transform: translate(-100%)
   }
 }
-.skeleton__avatar{
-  height: 35px;
+
+.skeleton__avatar {
   width: 35px;
+  height: 35px;
   border-radius: 3px;
   background-color: rgba(50, 57, 57, 0.3);
 }
-.skeleton__author{
-  height: 10px;
-  width: 120px;
-  border-radius: 3px;
-  background-color: rgba(50, 57, 57, 0.3);
-  position: absolute;
-  bottom: 30px;
-  left: 40px;
+
+.skeleton__author {
   right: 0;
-}
-.skeleton__details {
-  background-color: rgba(50, 57, 57, 0.3);
-height: 20px;
-border-radius: 3px;
+  left: 40px;
+  width: 120px;
+  height: 10px;
+  bottom: 30px;
   position: absolute;
-  bottom: 5px;
+  border-radius: 3px;
+  background-color: rgba(50, 57, 57, 0.3);
+}
+
+.skeleton__details {
   left: 40px;
   right: 20px;
+  bottom: 5px;
+  height: 20px;
+  position: absolute;
+  border-radius: 3px;
+  background-color: rgba(50, 57, 57, 0.3);
 
 }

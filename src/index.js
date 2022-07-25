@@ -8,10 +8,10 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { BrowserRouter as Router, Switch, Route, withRouter } from "react-router-dom";
 import Spinner from "./Spinner";
 import { auth } from './firebase'
-import rootReducer from "./reducers";
 import Login from "./components/Auth/Login";
-import { setUser, clearUser } from "./config/store/actions";
 import Register from "./components/Auth/Register";
+import rootReducer from "./config/store/reducers";
+import { setUser, clearUser } from "./config/store/actions";
 import registerServiceWorker from "./registerServiceWorker";
 
 const store = createStore(rootReducer, composeWithDevTools())

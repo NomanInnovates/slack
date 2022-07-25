@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Icon, Menu, Modal, Form, Input, Button } from 'semantic-ui-react'
 import { database } from '../../firebase'
-import { setCurrentChannel, setPrivateChannel } from '../../actions'
+import { setCurrentChannel, setPrivateChannel } from '../../config/actions'
 
 export class Channels extends Component {
   state = {

@@ -10,7 +10,7 @@ import Spinner from "./Spinner";
 import { auth } from './firebase'
 import rootReducer from "./reducers";
 import Login from "./components/Auth/Login";
-import { setUser, clearUser } from "./actions";
+import { setUser, clearUser } from "./config/actions";
 import Register from "./components/Auth/Register";
 import registerServiceWorker from "./registerServiceWorker";
 

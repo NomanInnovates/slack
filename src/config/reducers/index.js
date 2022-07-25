@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/types'
+import * as actionTypes from '../types'
 import { combineReducers } from 'redux'
 const intialState = {
     currentUser: null,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Icon, Menu } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { setCurrentChannel, setPrivateChannel } from '../../actions'
+import { setCurrentChannel, setPrivateChannel } from '../../config/store/actions'
 import { database } from '../../firebase'
 
 class Starred extends Component {

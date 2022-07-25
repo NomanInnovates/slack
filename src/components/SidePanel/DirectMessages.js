@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Icon, Menu } from 'semantic-ui-react'
 import { database } from '../../firebase'
-import { setCurrentChannel, setPrivateChannel } from '../../actions'
+import { setCurrentChannel, setPrivateChannel } from '../../config/store/actions'
 
 class DirectMessages extends Component {
     state = {

@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react";
 import { SliderPicker } from "react-color";
 import firebase from "../../firebase";
-import { setColors } from "../../actions";
+import { setColors } from "../../config/store/actions";
 import { connect } from "react-redux";
 
 

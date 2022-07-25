@@ -6,7 +6,7 @@ import {database} from "../../firebase";
 import MessageForm from "./MessageForm";
 import MessagesHeader from "./MessagesHeader";
 import { connect } from "react-redux";
-import { setUserPosts } from "../../config/actions";
+import { setUserPosts } from "../../config/store/actions";
 import Typing from "./Typing/Typing";
 import Skeleton from "./Skeleton";
  

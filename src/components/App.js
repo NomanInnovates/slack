@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Grid, GridColumn } from "semantic-ui-react";
 import "./App.css";
 import Messages from "./Messages/Messages";
@@ -7,7 +7,10 @@ import MetaPanel from "./MetaPanel/MetaPanel";
 import SidePanel from "./SidePanel/SidePanel";
 import ColorPanel from "./ColorPanel/ColorPanel";
 
-const App = ({ currentUser, currentChannel, isPrivateChannel ,userPosts }) =>
+const App = ({ currentUser, currentChannel, isPrivateChannel ,userPosts }) =>{
+  const s = useSelector(s => s)
+  console.log("s",s)
+  return(
   <Grid columns="equal" className="app" style={{ background: "#eee" }}>
     <ColorPanel currentUser={currentUser} />
 
@@ -29,7 +32,7 @@ const App = ({ currentUser, currentChannel, isPrivateChannel ,userPosts }) =>
        key={currentChannel && currentChannel.id}
         />
     </GridColumn>
-  </Grid>
+  </Grid>)}
 
 const mapStateToProps = (state) => {
   return {

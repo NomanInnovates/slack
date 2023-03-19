@@ -69,7 +69,7 @@ class Register extends React.Component {
     event.preventDefault();
     if(this.isFormValid()){
       this.setState({loading:true})
-      auth()
+      auth
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(createdUser => {
         createdUser.user.updateProfile({

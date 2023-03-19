@@ -102,7 +102,9 @@ class Messages extends React.Component {
     addMessageListener = channelId => {
         let loadedMessages = [];
         const ref = this.getMessagesRef()
+        console.log('channelId',channelId)
         ref.child(channelId).on("child_added", snap => {
+            console.log('child_added',snap)
             loadedMessages.push(snap.val());
             this.setState({
                 messages: loadedMessages,
@@ -230,7 +232,7 @@ class Messages extends React.Component {
         const { messagesRef, messages, privateChannel, channel,
              user, progressBar, isChannelStarred, numUniqueUsers, 
              searchResults, searchTerm, typingUsers ,messagesLoading} = this.state;
-
+console.log("sttate",this.state)
         return (
             <React.Fragment>
                 <MessagesHeader

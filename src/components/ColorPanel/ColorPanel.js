@@ -65,7 +65,7 @@ class ColorPanel extends React.Component {
     }
     saveColors = () => {
         let { primary, secondary } = this.state
-        this.state.userRef.child(this.state.user.uid + "/colors").push().update({ primary, secondary }).then(() => {
+        this.state.userRef.child(this.state.user.uid + "/colors").update({ primary, secondary }).then(() => {
             console.log("colors added")
             this.closeModal()
         }).catch(err => console.error(err))
